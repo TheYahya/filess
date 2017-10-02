@@ -9,7 +9,10 @@ const homedir = require('homedir')
 require('dotenv').config()
 
 // The directory that we wanna serve
-let dir = process.env.DIR.replace('~', homedir())
+let dir = (process.env.DIR) ? process.env.DIR.replace('~', homedir()) : '~'.replace('~', homedir())  
+
+// Set the port as well
+let port = process.env.PORT || 3000
 
 // Handle all the urls with this single route
 app.get('/*', (req, res) => {
@@ -74,6 +77,6 @@ app.get('/*', (req, res) => {
   })
 })
 
-const listener = app.listen(3000, () => {
+const listener = app.listen(port, () => {
   console.log(`File-server listening on port ${listener.address().port}`)
 })
