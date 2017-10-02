@@ -8,6 +8,9 @@ const homedir = require('homedir')
 // Reading .env file
 require('dotenv').config()
 
+// Serving static files
+app.use(express.static('public'))
+
 // The directory that we wanna serve
 let dir = (process.env.DIR) ? process.env.DIR.replace('~', homedir()) : '~'.replace('~', homedir())  
 

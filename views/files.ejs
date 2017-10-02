@@ -1,9 +1,21 @@
-<h1><code>Index of 
-<% breadcrumbs.forEach(function (breadcrumb) { %>
-  <a href="<%= breadcrumb.url %>"><%= breadcrumb.title %></a> /
-<% }) %>  
-</code></h1>
-<br>
-<% files.forEach(function(file) { %>
-  <code><a href="<%= file.url %>"><%= file.name %></a><%= (typeof file.size != 'undefined') ? ' - ' + file.size + 'KB' : '' %></code><br/>
-<% }); %>
+<div class="table-responsive">
+  <h2>Files</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Size (KB)</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% files.forEach(function(file, i) { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><a href="<%= file.url %>"><%= file.name %></a></td>
+        <td><%= (typeof file.size != 'undefined') ? file.size : '-' %></td>
+        </tr> 
+    <% }); %>
+    </tbody>
+  </table>
+</div>
