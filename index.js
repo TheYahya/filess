@@ -5,17 +5,17 @@ const app = express()
 const fs = require('fs')
 const url = require('url')
 const homedir = require('homedir')
+
 // Reading .env file
 require('dotenv').config()
 
-// Serving static files
-app.use(express.static('public'))
-
 // The directory that we wanna serve
 let dir = (process.env.DIR) ? process.env.DIR.replace('~', homedir()) : '~'.replace('~', homedir())  
-
 // Set the port as well
 let port = process.env.PORT || 3000
+
+// Serving static files
+app.use(express.static('public'))
 
 // Handle all the urls with this single route
 app.get('/*', (req, res) => {
@@ -80,6 +80,7 @@ app.get('/*', (req, res) => {
   })
 })
 
+// Igniting server
 const listener = app.listen(port, () => {
   console.log(`File-server listening on port ${listener.address().port}`)
 })
