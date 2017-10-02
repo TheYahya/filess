@@ -17,6 +17,14 @@
       <div class="header clearfix">
         <h3 class="text-muted">File Server</h3>
       </div>
+      <nav class="breadcrumb">
+          <% breadcrumbs.forEach(function (breadcrumb, i) { %>
+            <% if (breadcrumbs.length - 1 == i) { %>
+              <span class="breadcrumb-item active"><%= breadcrumb.title %></span>
+            <% } else { %>
+              <a class="breadcrumb-item" href="<%= breadcrumb.url %>"><%= breadcrumb.title %></a>
+            <% } %>
+          <% }) %> 
       </nav>
 
       <!-- Good for uploading box that we made it later :)) -->
