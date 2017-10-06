@@ -1,12 +1,12 @@
 {
-  "name": "file-server",
+  "name": "filess",
   "version": "0.1.0",
   "author": "Yahya SayadArbabi <yahya.arbabi@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheYahya/file-server/issues"
+    "url": "https://github.com/TheYahya/filess/issues"
   },
-  "homepage": "https://github.com/TheYahya/file-server#readme",
+  "homepage": "https://github.com/TheYahya/filess#readme",
   "scripts": {
     "build": "gulp sass",
     "start": "npm run build & node index.js"
