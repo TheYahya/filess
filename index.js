@@ -19,12 +19,6 @@ app.use(express.static('public'))
 
 // Handle all the urls with this single route
 app.get('/*', (req, res) => {
-  // Remove duplication '/' in the end of thr urls
-  if (req.url.substring(req.url.length - 1, req.url.length) == '/') {
-    res.redirect(req.url.substring(0, req.url.length - 1))
-    return
-  }
-
   // Generate current directory based on root directory & url
   let currentPath = dir + decodeURI(req.url)
   // Show 404 if not exists

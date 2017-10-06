@@ -7,7 +7,7 @@ Clone it
 $ git clone https://github.com/TheYahya/filess.git
 ```
 ```bash
-$ cd file-server/
+$ cd filess
 ```
 Install dependencies
 ```bash
