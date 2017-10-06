@@ -1,5 +1,5 @@
 # File server
-#### Local file streamin that works!
+#### Local file streaming that works!
 
 ## Installation
 Clone it
