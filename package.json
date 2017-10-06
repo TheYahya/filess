@@ -1,7 +1,12 @@
 {
   "name": "file-server",
   "version": "0.1.0",
-  "private": true,
+  "author": "Yahya SayadArbabi <yahya.arbabi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheYahya/file-server/issues"
+  },
+  "homepage": "https://github.com/TheYahya/file-server#readme",
   "scripts": {
     "build": "gulp sass",
     "start": "npm run build & node index.js"
