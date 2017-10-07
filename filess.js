@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const fs = require('fs')
 const url = require('url')
+const runGulpTask = require('run-gulp-task')
 const homedir = require('homedir')
 
 // Reading .env file
@@ -15,9 +16,12 @@ let theDir = (process.env.DIR) ? process.env.DIR.replace('~', homedir()) : '~'.r
 let thePort = process.env.PORT || 3030
 
 // Serving static files
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 
 module.exports = (dir = theDir, port = thePort) => {
+  // Compile sass files
+  runGulpTask('sass', './gulpfile.js')
+
   // Handle all the urls with this single route
   app.get('/*', (req, res) => {
     // Generate current directory based on root directory & url
@@ -43,6 +47,9 @@ module.exports = (dir = theDir, port = thePort) => {
       files.forEach((file) => {
         // Full path of file/directory
         let fullPath = `${currentPath}/${file}`
+        if (!hasAccess(fullPath)) {
+          return
+        }
         let stats = fs.lstatSync(fullPath)
         theFiles.push({
           name: file,
@@ -51,7 +58,6 @@ module.exports = (dir = theDir, port = thePort) => {
           url: (req.url == '/') ? `${file}` : `${req.url}/${file}`,
         })
       })
-
 
       let urlParts = decodeURI(req.url).split('/')
       // Because of a / in the end of url that sometimes happens
@@ -77,7 +83,7 @@ module.exports = (dir = theDir, port = thePort) => {
       })
 
       // Rendering the list of file and folders in the currentPath
-      res.render('default.ejs', {breadcrumbs: breadcrumbs, files: theFiles})
+      res.render(__dirname + '/views/default.ejs', {breadcrumbs: breadcrumbs, files: theFiles})
     })
   })
 
@@ -85,4 +91,19 @@ module.exports = (dir = theDir, port = thePort) => {
   const listener = app.listen(port, () => {
     console.log(`File-server listening on port ${listener.address().port}`)
   })
+}
+
+
+/**
+ * @param   {string}  path 
+ * 
+ * @return  {boolean}
+ */
+function hasAccess(path) {
+  try {
+    fs.accessSync(path);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
