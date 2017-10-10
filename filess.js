@@ -19,9 +19,6 @@ let thePort = process.env.PORT || 3030
 app.use(express.static(__dirname + '/public'))
 
 module.exports = (dir = theDir, port = thePort) => {
-  // Compile sass files
-  runGulpTask('sass', './gulpfile.js')
-
   // Handle all the urls with this single route
   app.get('/*', (req, res) => {
     // Generate current directory based on root directory & url
