@@ -1,23 +1,38 @@
 # File server
 #### Local file streaming that works!
 
-## Installation
-Clone it
+## Install
 ```bash
-$ git clone https://github.com/TheYahya/filess.git
+$ npm i -g filess
 ```
+
+## Usage
 ```bash
-$ cd filess/
+$ filess
 ```
-Install dependencies
+
+And for more help
 ```bash
-$ npm install 
+$ filess -h
 ```
-And run it
+
 ```bash
-$ npm start
+A file server/streaming that works.
+
+  Usage
+    $ filess <options>
+
+  Options
+    --dir, -d   Set the directory you wanna serve, default: ~/
+    --port, -p  Set the port, default: 3030
+    --help, -h  Showing this help menu
+  
+  Examples
+    $ filess
+    $ filess -d ~/Videos
+    $ filess -p 3000
+    $ filess -d ~/ -p 3000
 ```
-For running on diffrent `PORT` or hosting diffrent `DIRECTORY`, just change the config in `.env` file and restart it.
 
 ## Screenshots
 <a href="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/desktop.png"><img src="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/desktop.png" width="480px"/></a>
