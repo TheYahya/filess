@@ -4,8 +4,8 @@ const express = require('express')
 const app = express()
 const fs = require('fs')
 const url = require('url')
-const runGulpTask = require('run-gulp-task')
 const homedir = require('homedir')
+const mime = require('mime-types')
 
 // Reading .env file
 require('dotenv').config()
@@ -23,16 +23,67 @@ module.exports = (dir = theDir, port = thePort) => {
   app.get('/*', (req, res) => {
     // Generate current directory based on root directory & url
     let currentPath = dir + decodeURI(req.url)
+
     // Show 404 if not exists
-    if (!fs.existsSync(currentPath)) {
+    if (!fs.existsSync(currentPath) &&
+    // If the url end with .stream it's mean we want to strem the file in browser not download it
+    !fs.existsSync(currentPath.substring(0, currentPath.length - 7))) {
       res.status(404).end('Not found')
       return
-    }
+    } 
 
+    // We just Download file
+    let download = true
+    if (currentPath.substring(currentPath.length - 7, currentPath.length).includes('.stream')
+    && fs.lstatSync(currentPath.substring(0, currentPath.length - 7)).isFile()) {
+      // We going to stream the file
+      download = false
+      currentPath = currentPath.substring(0, currentPath.length - 7)
+    }
+    
     // Check if it's a file or directory
     if (fs.lstatSync(currentPath).isFile()) {
-      // It's a file, so we just downloading it
-      res.download(currentPath)
+      let filePath = currentPath;
+      if (download) {
+        res.download(filePath)
+        return
+      }
+      
+      let mimeType = mime.lookup(filePath) 
+      let stat = fs.statSync(filePath)
+      let total = stat.size
+      
+      if (req.headers.range) {
+        let range = req.headers.range
+        let parts = range.replace(/bytes=/, "").split("-")
+        let partialstart = parts[0]
+        let partialend = parts[1]
+        
+        let start = parseInt(partialstart, 10)
+        let end = partialend ? parseInt(partialend, 10) : total - 1
+        let chunksize = (end - start) + 1
+        console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize)
+        
+        let file = fs.createReadStream(filePath, {
+          start: start,
+          end: end})
+
+        res.writeHead(206, {
+          'Content-Range': 'bytes ' + start + '-' + end + '/' + total,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunksize,
+          'Content-Type': mimeType })
+
+        file.pipe(res)
+      } else {
+        console.log('ALL: ' + total)
+
+        res.writeHead(200, {
+          'Content-Length': total,
+          'Content-Type': mimeType })
+
+        fs.createReadStream(filePath).pipe(res)
+      }
       return
     }
 
@@ -80,7 +131,10 @@ module.exports = (dir = theDir, port = thePort) => {
       })
 
       // Rendering the list of file and folders in the currentPath
-      res.render(__dirname + '/views/default.ejs', {breadcrumbs: breadcrumbs, files: theFiles})
+      res.render(__dirname + '/views/default.ejs', {
+        breadcrumbs: breadcrumbs,
+        files: theFiles,
+        download: ''})
     })
   })
 
@@ -98,9 +152,9 @@ module.exports = (dir = theDir, port = thePort) => {
  */
 function hasAccess(path) {
   try {
-    fs.accessSync(path);
-    return true;
+    fs.accessSync(path)
+    return true
   } catch (e) {
-    return false;
+    return false
   }
 }
