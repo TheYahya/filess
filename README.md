@@ -38,6 +38,11 @@ A file server/streaming that works.
 <a href="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/desktop.png"><img src="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/desktop.png" width="480px"/></a>
 <a href="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/mobile.jpg"><img src="https://raw.githubusercontent.com/TheYahya/filess/master/screenshots/mobile.jpg" width="150px"/></a>
 
+
+## To-Do list
+- [ ] Upload file
+
+
 ## Contributing
 Everyone is very welcome to contribute to this project.
 You can contribute just by submitting bugs or suggesting improvements by
