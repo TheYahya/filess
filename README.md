@@ -1,3 +1,5 @@
+[![license](https://img.shields.io/github/license/TheYahya/filess.svg)](https://raw.githubusercontent.com/TheYahya/filess/master/LICENSE) [![npm](https://img.shields.io/npm/dt/filess.svg)](https://www.npmjs.com/package/filess)
+
 # File server
 #### Local file streaming that works!
 
