@@ -43,7 +43,7 @@ A file server/streaming that works.
 
 ## To-Do list
 - [ ] Upload file
-
+- [ ] Add `-v` command for version
 
 ## Contributing
 Everyone is very welcome to contribute to this project.
