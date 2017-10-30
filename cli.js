@@ -9,9 +9,10 @@ const cli = meow(`
     $ filess <options>
 
   Options
-    --dir, -d   Set the directory you wanna serve, default: ~/
-    --port, -p  Set the port, default: 3030
-    --help, -h  Showing this help menu
+    --dir, -d     Set the directory you wanna serve, default: ~/
+    --port, -p    Set the port, default: 3030
+    --help, -h    Showing this help menu
+    --version, -v Show version
     
   Examples
     $ filess
@@ -22,7 +23,8 @@ const cli = meow(`
   alias: {
     d: 'dir',
     p: 'port',
-    h: 'help'
+    h: 'help',
+    v: 'version'
   },
   flags: {
 		port: {
