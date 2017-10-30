@@ -44,6 +44,8 @@ A file server/streaming that works.
 ## To-Do list
 - [ ] Upload file
 - [ ] Add `-v` command for version
+- [ ] Add update notifier
+
 
 ## Contributing
 Everyone is very welcome to contribute to this project.
