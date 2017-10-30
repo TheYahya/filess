@@ -62,25 +62,25 @@ module.exports = (dir = theDir, port = thePort) => {
         let start = parseInt(partialstart, 10)
         let end = partialend ? parseInt(partialend, 10) : total - 1
         let chunksize = (end - start) + 1
-        console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize)
         
         let file = fs.createReadStream(filePath, {
           start: start,
-          end: end})
+          end: end
+        })
 
         res.writeHead(206, {
           'Content-Range': 'bytes ' + start + '-' + end + '/' + total,
           'Accept-Ranges': 'bytes',
           'Content-Length': chunksize,
-          'Content-Type': mimeType })
+          'Content-Type': mimeType
+        })
 
         file.pipe(res)
       } else {
-        console.log('ALL: ' + total)
-
         res.writeHead(200, {
           'Content-Length': total,
-          'Content-Type': mimeType })
+          'Content-Type': mimeType
+        })
 
         fs.createReadStream(filePath).pipe(res)
       }
@@ -115,7 +115,7 @@ module.exports = (dir = theDir, port = thePort) => {
       }
 
       // Creating breadcrumbs items with url parts
-      // It's: Url & title
+      // It's Url & title
       let breadcrumbs = []
       urlParts.forEach((item, index) => {
         let url = '/'
