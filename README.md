@@ -45,6 +45,7 @@ A file server/streaming that works.
 - [ ] Upload file
 - [x] Add `-v` command for version
 - [ ] Add update notifier
+- [ ] Visible/Invisible hidden file/directories
 
 
 ## Contributing
