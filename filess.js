@@ -146,6 +146,8 @@ module.exports = (dir = theDir, port = thePort) => {
 
 
 /**
+ * Check access to the file/directory
+ *
  * @param   {string}  path 
  * 
  * @return  {boolean}
