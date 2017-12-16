@@ -19,31 +19,35 @@ let thePort = process.env.PORT || 3030
 app.use(express.static(__dirname + '/public'))
 
 module.exports = (dir = theDir, port = thePort) => {
+  // Set global variable in middleware
+  app.use('/*', (req, res, next) => {
+    // Generate current directory based on root directory & url
+    req.currentPath = dir + decodeURI(req.url)
+    next()
+  })
+
   // Handle all the urls with this single route
   app.get('/*', (req, res) => {
-    // Generate current directory based on root directory & url
-    let currentPath = dir + decodeURI(req.url)
-
     // Show 404 if not exists
-    if (!fs.existsSync(currentPath) &&
+    if (!fs.existsSync(req.currentPath) &&
     // If the url end with .stream it's mean we want to strem the file in browser not download it
-    !fs.existsSync(currentPath.substring(0, currentPath.length - 7))) {
+    !fs.existsSync(req.currentPath.substring(0, req.currentPath.length - 7))) {
       res.status(404).end('Not found')
       return
     } 
 
     // We just Download file
     let download = true
-    if (currentPath.substring(currentPath.length - 7, currentPath.length).includes('.stream')
-    && fs.lstatSync(currentPath.substring(0, currentPath.length - 7)).isFile()) {
+    if (req.currentPath.substring(req.currentPath.length - 7, req.currentPath.length).includes('.stream')
+    && fs.lstatSync(req.currentPath.substring(0, req.currentPath.length - 7)).isFile()) {
       // We going to stream the file
       download = false
-      currentPath = currentPath.substring(0, currentPath.length - 7)
+      req.currentPath = req.currentPath.substring(0, req.currentPath.length - 7)
     }
     
     // Check if it's a file or directory
-    if (fs.lstatSync(currentPath).isFile()) {
-      let filePath = currentPath;
+    if (fs.lstatSync(req.currentPath).isFile()) {
+      let filePath = req.currentPath;
       if (download) {
         res.download(filePath)
         return
@@ -89,12 +93,12 @@ module.exports = (dir = theDir, port = thePort) => {
 
     // So it'a directory
     // Read directory
-    fs.readdir(currentPath, (err, files) => {
+    fs.readdir(req.currentPath, (err, files) => {
       if (err) throw err
       let theFiles = []
       files.forEach((file) => {
         // Full path of file/directory
-        let fullPath = `${currentPath}/${file}`
+        let fullPath = `${req.currentPath}/${file}`
         if (!hasAccess(fullPath)) {
           return
         }
@@ -134,7 +138,8 @@ module.exports = (dir = theDir, port = thePort) => {
       res.render(__dirname + '/views/default.ejs', {
         breadcrumbs: breadcrumbs,
         files: theFiles,
-        download: ''})
+        download: ''
+      })
     })
   })
 
