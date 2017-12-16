@@ -6,6 +6,7 @@ const fs = require('fs')
 const url = require('url')
 const homedir = require('homedir')
 const mime = require('mime-types')
+const bodyParser = require('body-parser')
 
 // Reading .env file
 require('dotenv').config()
@@ -17,6 +18,10 @@ let thePort = process.env.PORT || 3030
 
 // Serving static files
 app.use(express.static(__dirname + '/public'))
+
+// Configuring express to use body-parser as middle-ware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 module.exports = (dir = theDir, port = thePort) => {
   // Set global variable in middleware
@@ -141,7 +146,7 @@ module.exports = (dir = theDir, port = thePort) => {
         download: ''
       })
     })
-  })
+  }) 
 
   // Igniting server
   const listener = app.listen(port, () => {
