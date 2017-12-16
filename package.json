@@ -1,6 +1,6 @@
 {
   "name": "filess",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A file server/streaming that works.",
   "author": "Yahya SayadArbabi <yahya.arbabi@gmail.com>",
   "engines": {
