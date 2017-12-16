@@ -42,7 +42,7 @@ A file server/streaming that works.
 
 
 ## To-Do list
-- [ ] Upload file
+- [x] Upload file
 - [x] Add `-v` command for version
 - [ ] Add update notifier
 - [ ] Visible/Invisible hidden file/directories

@@ -1,12 +1,13 @@
 'use strict'
 
-const express = require('express')
-const app = express()
-const fs = require('fs')
-const url = require('url')
-const homedir = require('homedir')
-const mime = require('mime-types')
-const bodyParser = require('body-parser')
+const express     = require('express')
+const app         = express()
+const fs          = require('fs')
+const url         = require('url')
+const homedir     = require('homedir')
+const mime        = require('mime-types')
+const bodyParser  = require('body-parser')
+const upload      = require('multer')({ dest: '/tmp/' })
 
 // Reading .env file
 require('dotenv').config()
@@ -27,10 +28,11 @@ module.exports = (dir = theDir, port = thePort) => {
   // Set global variable in middleware
   app.use('/*', (req, res, next) => {
     // Generate current directory based on root directory & url
-    req.currentPath = dir + decodeURI(req.url)
+    req.currentPath = (dir + decodeURI(req.originalUrl)).replace('//', '/') 
+
     next()
   })
-
+  
   // Handle all the urls with this single route
   app.get('/*', (req, res) => {
     // Show 404 if not exists
@@ -146,7 +148,23 @@ module.exports = (dir = theDir, port = thePort) => {
         download: ''
       })
     })
-  }) 
+  })
+
+  // Upload file
+  app.post('/*', upload.single('file'), (req, res) => {
+    // Read uploaded file
+    fs.readFile(req.file.path, (err, file) => {
+      // File path to upload
+      let destPath = (req.currentPath + '/' + req.file.originalname).replace('//', '/')
+
+      // Create & save the file
+      fs.writeFile(destPath, file, (err) => {
+        if (err) throw err
+
+        res.redirect(req.url)
+      })
+    }) 
+  })
 
   // Igniting server
   const listener = app.listen(port, () => {
