@@ -47,6 +47,7 @@ A file server/streaming that works.
 - [ ] Add update notifier
 - [ ] Visible/Invisible hidden file/directories
 - [ ] Add `sort by`
+- [ ] Writing test :bowtie:
 
 
 ## Contributing
