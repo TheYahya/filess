@@ -3,22 +3,23 @@
 
 const meow = require('meow')
 const filess = require('./filess')
+const chalk = require('chalk')
 
 const cli = meow(`
-  Usage
-    $ filess <options>
+  ${chalk.green('Usage')}
+    $ filess <${chalk.gray('options')}>
 
-  Options
-    --dir, -d     Set the directory you wanna serve, default: ~/
-    --port, -p    Set the port, default: 3030
-    --help, -h    Showing this help menu
-    --version, -v Show version
+  ${chalk.green('Options')}
+    ${chalk.blue('--dir')}, ${chalk.blue(chalk.bold('-d'))}     ${chalk.gray('Set the directory you wanna serve, ')}${chalk.red('default: ~/')}
+    ${chalk.blue('--port')}, ${chalk.blue(chalk.bold('-p'))}    ${chalk.gray('Set the port, ')}${chalk.red('default: 3030')}
+    ${chalk.blue('--help')}, ${chalk.blue(chalk.bold('-h'))}    ${chalk.gray('Showing this help menu')}
+    ${chalk.blue('--version')}, ${chalk.blue(chalk.bold('-v'))} ${chalk.gray('Show version')}
     
-  Examples
-    $ filess
-    $ filess -d ~/Videos
-    $ filess -p 3000
-    $ filess -d ~/ -p 3000
+  ${chalk.green('Examples')}
+    ${chalk.gray('$ filess')}
+    ${chalk.gray('$ filess -d ~/Videos')}
+    ${chalk.gray('$ filess -p 3000')}
+    ${chalk.gray('$ filess -d ~/ -p 3000')}
 `, {
   alias: {
     d: 'dir',

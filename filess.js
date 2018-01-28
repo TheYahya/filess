@@ -4,6 +4,7 @@ const express     = require('express')
 const app         = express()
 const fs          = require('fs')
 const url         = require('url')
+const chalk       = require('chalk')
 const homedir     = require('homedir')
 const mime        = require('mime-types')
 const bodyParser  = require('body-parser')
@@ -168,7 +169,7 @@ module.exports = (dir = theDir, port = thePort) => {
 
   // Igniting server
   const listener = app.listen(port, () => {
-    console.log(`File-server listening on port ${listener.address().port}`)
+    console.log(chalk.red(`File-server listening on port ${listener.address().port}`))
   })
 }
 
