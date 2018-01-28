@@ -28,8 +28,8 @@ const cli = meow(`
     v: 'version'
   },
   flags: {
-		port: {
-			type: 'integer',
+    port: {
+      type: 'integer',
       alias: 'p',
       default: null
     },
@@ -38,7 +38,7 @@ const cli = meow(`
       alias: 'd',
       default: null
     }
-	}
+  }
 })
 
 filess(cli.flags.d, cli.flags.p)
